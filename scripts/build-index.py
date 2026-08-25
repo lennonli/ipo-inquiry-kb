@@ -28,7 +28,7 @@ def parse_frontmatter(text):
         k, v = m.groups()
         v = v.strip().strip('"')
         if k == "tags":
-            fm[k] = [t.strip() for t in v.strip("[]").split(",") if t.strip()]
+            fm[k] = [t.strip().strip('"').strip() for t in v.strip("[]").split(",") if t.strip()]
         elif k == "inquiry_rounds":
             fm[k] = int(v) if v.isdigit() else 0
         else:

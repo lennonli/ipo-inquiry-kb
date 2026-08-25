@@ -32,7 +32,7 @@ BOARD_MAP = [
 # 法律类别归一化（保守映射：首个命中生效；未命中原样保留）
 NORM = [
     (r"代持", "股权代持"),
-    (r"对赌|特殊权利|特殊投资条款", "对赌与特殊权利条款"),
+    (r"对赌|特殊权利|特殊投资条款|一票否决|领售|反稀释|优先清算|^B\+?轮?$|^B$", "对赌与特殊权利条款"),
     (r"一致行动|控制权稳定", "控制权稳定性"),
     (r"实控人|实际控制人|控股股东", "实控人认定"),
     (r"同业竞争", "同业竞争"),
@@ -61,6 +61,13 @@ NORM = [
 ]
 
 SKIP_CAT = re.compile(r"^(纯?(业务|财务|经营|研发)|—|-+|其他(财务|业务)?)|财务测算")
+
+# YAML 行内数组安全字符清洗（引号/括号/逗号等会破坏解析）
+TAG_SANITIZE = re.compile(r"[\"'\[\]\{\}（）()：:，,。；;]")
+
+
+# 原文未载明但已人工核验补录的律师（仅此一例，其余空值保持空）
+HARDCODE_LAWYER = {"七一股份.md": "北京中伦文德（杭州）事务所"}
 
 
 def normalize_board(inner: str):
@@ -111,7 +118,7 @@ def parse_tags(text: str):
         if len(cells) < 4 or cells[0] == "轮次":
             continue
         for raw in re.split(r"[/、，,；;]", cells[3]):
-            raw = raw.strip()
+            raw = TAG_SANITIZE.sub("", raw).strip()
             if not raw or SKIP_CAT.search(raw):
                 continue
             tag = next((t for p, t in NORM if re.search(p, raw)), raw)
@@ -120,7 +127,7 @@ def parse_tags(text: str):
 
 
 def fmt_yaml_list(items):
-    return "[" + ", ".join(items) + "]"
+    return "[" + ", ".join(f'"{t}"' for t in items) + "]"
 
 
 def main():
@@ -145,6 +152,7 @@ def main():
             r"(?:[\u4e00-\u9fa5]{2,6}分所)?", text[:4000])
         lawyer = re.sub(r"^(发行人律师|申请人律师|经办律师)", "",
                         lm.group(0)) if lm else ""
+        lawyer = HARDCODE_LAWYER.get(fn, lawyer)
         tags = parse_tags(text)
 
         miss = [k for k, v in dict(code=code, company=company, board=board,
