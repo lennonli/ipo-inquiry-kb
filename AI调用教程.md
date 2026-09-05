@@ -1,6 +1,7 @@
 # IPO问询案例库与证券法规知识库 AI 调用教程
 
-> 版本：V3 ｜ 生成日期：2026-09-03 ｜ 适用：任何具备终端/文件读写能力的 AI 智能体（ZCode、Claude、Codex、Cursor 等）
+> 版本：V4 ｜ 生成日期：2026-09-05 ｜ 适用：任何具备终端/文件读写能力的 AI 智能体（ZCode、Claude、Codex、Cursor 等）
+> V4 修改：技能包免配置安装——首次运行自动克隆知识库，附 ipo-kb.zip 直装包
 > V3 修改：并入证券法规知识库（rules）介绍；对应网站"知识库SKILL"栏目
 > V2 修改：方式一改为安装公开技能包 ipo-kb
 
@@ -10,11 +11,11 @@
 
 同一 GitHub 主仓 `lennonli/ipo-inquiry-kb` 现包含**两大知识库**，均持续定期更新：
 
-### 1. IPO问询案例库（2023–2026 四年度，共 1,628 份，一司一文）
+### 1. IPO问询案例库（2023–2026 四年度，共 1,636 份（截至 2026-09-05，持续更新），一司一文）
 
 | 年度目录 | 案例数 | 覆盖 |
 | --- | --- | --- |
-| `2026/` | 242 | 北交所、科创板、深市创业板、沪深主板（2026 年上市/在审） |
+| `2026/` | 250 | 北交所、科创板、深市创业板、沪深主板（2026 年上市/在审） |
 | `2025/` | 430 | A股 116 + 新三板 314 |
 | `2024/` | 386 | A股 100 + 新三板 286 |
 | `2023/` | 570 | A股 313 + 新三板 257 |
@@ -76,20 +77,23 @@
 ```text
 请为我安装"IPO问询案例知识库"技能（ipo-kb），按以下步骤执行：
 
-1. 获取技能包并安装：
-   git clone https://github.com/lennonli/licheng-skills.git /tmp/licheng-skills
-   然后把其中的 ipo-kb/ 目录复制到你的技能目录：
-   - ZCode / Codex：~/.agents/skills/ipo-kb
-   - Claude（桌面版/CLI）：~/.claude/skills/ipo-kb
-   - 其他智能体环境：放到其技能扫描目录即可，技能入口是 SKILL.md
+1. 获取技能包并安装（两种方式任选其一）：
+   a. 若拿到的是 ipo-kb.zip 压缩包：解压后把 ipo-kb/ 整个文件夹复制到你的技能目录；
+   b. 或从技能仓获取：
+      git clone https://github.com/lennonli/licheng-skills.git /tmp/licheng-skills
+      然后把其中的 ipo-kb/ 目录复制到你的技能目录。
+      技能目录位置：ZCode/Codex 为 ~/.agents/skills/ipo-kb；Claude 为 ~/.claude/skills/ipo-kb；
+      其他智能体放到其技能扫描目录即可，技能入口是 SKILL.md。
 
-2. 获取知识库主仓（本机已有克隆的可跳过，技能会自动识别常见位置，
-   也可用环境变量 IPO_KB_ROOT 显式指定路径）：
-   git clone https://github.com/lennonli/ipo-inquiry-kb.git ~/ipo-inquiry-kb
-
-3. 自检（两条都应通过）：
+2. 运行自检（一条命令完成知识库安装+验证，无需手动克隆）：
    python3 ~/.agents/skills/ipo-kb/kb_search.py list
-   → 应列出 ipo(2026)/ipo2023/ipo2024/ipo2025 四库，合计 1,628 份
+   首次运行会自动把知识库主仓（github.com/lennonli/ipo-inquiry-kb，约百余 MB）
+   克隆到 ~/ipo-inquiry-kb 并列出四库及各自案例数（当前合计 1,600+，随库更新增长）。
+   本机已有知识库克隆的会自动识别（含 ~/Documents/Macbook-pro项目/19-IPO问询案例知识库），
+   也可用环境变量 IPO_KB_ROOT 显式指定路径。
+   若网络不通导致克隆失败，按脚本输出的指引排除网络问题后重跑即可。
+
+3. 验证检索：
    python3 ~/.agents/skills/ipo-kb/kb_search.py search "股权代持 还原" --limit 3
    → 应返回命中案例与摘录
 
@@ -100,7 +104,8 @@
 kb_search.py 目前面向四年度案例库；需要查法规时直接在 rules/ 目录按分类目录与
 关键词 grep，并结合 rules/scripts/index.json 定位。
 
-注意：本库定期更新，此后每次处理 IPO 相关任务前，先在知识库目录执行 git pull。
+注意：本库定期更新，此后每次处理 IPO 相关任务前，先运行
+python3 ~/.agents/skills/ipo-kb/kb_search.py update 同步最新内容。
 ```
 
 ### 方式二：MCP 方式——配置远程服务（适合测试与检索法规库）
