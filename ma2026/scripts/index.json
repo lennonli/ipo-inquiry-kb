@@ -331,6 +331,33 @@
   "fin_adv": "国泰海通证券股份有限公司"
  },
  {
+  "file": "688766-普冉股份.md",
+  "company": "普冉半导体（上海）股份有限公司",
+  "short": "",
+  "code": "688766",
+  "board": "科创板",
+  "layer": "",
+  "listing_date": "",
+  "inquiry_rounds": "",
+  "cutoff_date": "",
+  "lawyer": "待核验",
+  "tags": [
+   "重大资产重组",
+   "半导体存储",
+   "SLC NAND",
+   "eMMC",
+   "可转债支付",
+   "组合支付",
+   "产业链互补"
+  ],
+  "deal_type": "发行股份、可转换公司债券及支付现金购买资产并募集配套资金",
+  "pay_method": "混合",
+  "deal_amount": "待核验",
+  "status": "审核中（首轮问询回复已披露，未注册）",
+  "registered_date": "待核验",
+  "fin_adv": "待核验"
+ },
+ {
   "file": "688981-中芯国际集成.md",
   "company": "中芯国际集成电路制造有限公司",
   "short": "",
