@@ -15,6 +15,9 @@ FM_FIELDS = ["company", "short", "code", "board", "layer", "listing_date",
              "deal_type", "pay_method", "deal_amount", "status",
              "registered_date", "fin_adv"]
 
+# 各批次入库的 frontmatter 字段名不统一，做同义归一
+FM_ALIASES = {"stock_code": "code", "full_name": "company"}
+
 
 def parse_frontmatter(text):
     if not text.startswith("---"):
@@ -45,17 +48,45 @@ def parse_frontmatter(text):
     return fm
 
 
+def h1_info(text):
+    """从正文 H1『# 公司全称（代码·板块）…』兜底提取 company/code/board（frontmatter 缺字段时用）。"""
+    m = re.search(r"^# (.+?)（(\d{6})(?:·([^）]+))?）", text, re.M)
+    if not m:
+        return {}
+    info = {"company": m.group(1).strip(), "code": m.group(2)}
+    if m.group(3):
+        info["board"] = m.group(3).strip()
+    return info
+
+
+def fill_identity(row, fn, fm, text):
+    """仅当字段为空时回填 company/short/code/board，绝不覆盖 frontmatter 已有值。"""
+    h1 = h1_info(text)
+    m_fn = re.match(r"(\d{6})-(.+)\.md$", fn)
+    if not row.get("company"):
+        row["company"] = fm.get("company") or fm.get("full_name") or h1.get("company", "")
+    if not row.get("short"):
+        row["short"] = fm.get("short") or (m_fn.group(2) if m_fn else "")
+    if not row.get("code"):
+        row["code"] = fm.get("code") or fm.get("stock_code") or (m_fn.group(1) if m_fn else "") or h1.get("code", "")
+    if not row.get("board"):
+        row["board"] = fm.get("board") or h1.get("board", "")
+    return row
+
+
 def main():
     index = []
     for fn in sorted(os.listdir(CASES)):
         if not fn.endswith(".md"):
             continue
-        fm = parse_frontmatter(open(os.path.join(CASES, fn), encoding="utf-8").read())
+        text = open(os.path.join(CASES, fn), encoding="utf-8").read()
+        fm = parse_frontmatter(text)
         if not fm:
             print(f"[警告] {fn} 无 frontmatter，跳过", file=sys.stderr)
             continue
         row = {"file": fn}
         row.update({k: fm.get(k, "" if k != "tags" else []) for k in FM_FIELDS})
+        row = fill_identity(row, fn, fm, text)
         index.append(row)
     out = os.path.join(ROOT, "scripts", "index.json")
     with open(out, "w", encoding="utf-8") as f:
