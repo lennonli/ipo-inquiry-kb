@@ -6738,13 +6738,13 @@
   "file": "08-询价与承销/关于发布《北京证券交易所证券发行承销自律委员会管理细则》的公告.md",
   "title": "关于发布《北京证券交易所证券发行承销自律委员会管理细则》的公告",
   "short": "关于发布《北京证券交易所证券发行承销自律委员会管理细则》的公告",
-  "issuer": "北京证券交易所 北证公告〔2026〕38号",
+  "issuer": "北交所 北证公告[2022]5号",
   "docNo": "",
   "category": "08-询价与承销",
   "status": "",
-  "effective_date": "2026-09-18",
-  "publish_date": "2026-09-18",
-  "source_url": "https://www.bse.cn/uploads/6/file/public/202609/20260918161622_kqc27g0ar7.docx",
+  "effective_date": "2022-02-25",
+  "publish_date": "2022-02-25",
+  "source_url": "http://www.tzyhj.cn/rule/08/gyfbbjzqjyszqfxcxzlwyhglxzdgg.html",
   "tags": []
  },
  {
@@ -15950,6 +15950,21 @@
   "source_url": "http://www.tzyhj.cn/rule/13/wstzzqgsglbf.html",
   "tags": [
    "其他法规"
+  ]
+ },
+ {
+  "file": "13-常用法律、法规、规章及规则/对外投资管理办法.md",
+  "title": "对外投资管理办法",
+  "short": "对外投资管理办法",
+  "issuer": "国资委 国资委令第49号",
+  "docNo": "",
+  "category": "13-常用法律、法规、规章及规则",
+  "status": "",
+  "effective_date": "2026-10-22",
+  "publish_date": "2026-10-22",
+  "source_url": "http://www.tzyhj.cn/rule/13/dwtzglbf.html",
+  "tags": [
+   "常用法规"
   ]
  },
  {
