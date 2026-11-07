@@ -3131,7 +3131,7 @@
   "issuer": "上交所 上证函[2025]1697号",
   "docNo": "",
   "category": "03-债券发行审核上市",
-  "status": "",
+  "status": "废止",
   "effective_date": "2025-05-21",
   "publish_date": "2025-05-21",
   "source_url": "http://www.tzyhj.cn/rule/03/gyfbshzqjysgszqhzczczqfxssgpywzn2025n5yxddtz.html",
@@ -18909,5 +18909,20 @@
   "publish_date": "2026-10-30",
   "source_url": "https://www.sse.com.cn/lawandrules/guide2025/zqznlc/c/c_20261030_10836253.shtml",
   "tags": []
+ },
+ {
+  "file": "03-债券发行审核上市/关于发布《上海证券交易所公司债券和资产支持证券发行上市挂牌业务指南（2025年12月修订）》的通知.md",
+  "title": "关于发布《上海证券交易所公司债券和资产支持证券发行上市挂牌业务指南（2025年12月修订）》的通知",
+  "short": "关于发布《上海证券交易所公司债券和资产支持证券发行上市挂牌业务指南（2025年12月修订）》的通知",
+  "issuer": "上海证券交易所 上证函〔2025〕4209号",
+  "docNo": "上证函〔2025〕4209号",
+  "category": "03-债券发行审核上市",
+  "status": "",
+  "effective_date": "2025-12-19",
+  "publish_date": "2025-12-19",
+  "source_url": "https://www.sse.com.cn/lawandrules/guide/zqznlc/c/c_20251219_10802300.shtml",
+  "tags": [
+   "其他规定"
+  ]
  }
 ]
